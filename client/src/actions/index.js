@@ -1,4 +1,6 @@
-import { AUTH_STATUS } from '../actions/types';
+import { AUTH_STATUS } from './types';
+import history from '../history';
+
 import {
     CREATE_STREAM,
     FETCH_STREAMS,
@@ -17,8 +19,13 @@ const fetchAuth = (isSignedIn, userId) => {
     }
 };
 
-const createStream = formValues => async dispatch => {
-    const response = await stream.post('/streams', formValues);
+const createStream = formValues => async (dispatch, getState) => {
+    const userId = getState().auth.userId;
+    const response = await stream.post('/streams', {...formValues, userId});
+    
+    //link to root page after successfully create stream
+    history.push('/');
+
     dispatch({
         type: CREATE_STREAM,
         payload: response.data
