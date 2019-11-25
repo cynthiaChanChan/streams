@@ -21,6 +21,7 @@ html {
 body {
 	background-color: $color-secondary-dark;
 	box-sizing: border-box;
+	color: $color-white;
 }
 
 ul {
@@ -31,6 +32,10 @@ a {
 	color: inherit;
 	text-decoration: none;
 	display: inline-block;
+
+	&:hover {
+		color: inherit;
+	}
 }
 
 // change default selection style
