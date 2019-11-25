@@ -1,0 +1,60 @@
+%heading {
+    font-family: $font-display;
+    font-weight: 400;
+}
+
+body {
+    font-family: $font-primary;
+    font-weight: 300;
+    line-height: 1.6;
+    color: $color-white;
+}
+
+.heading-1 {
+    @extend %heading;
+    font-size: 2.5rem;
+    color: $color-white;
+    line-height: 1;
+}
+
+.heading-2 {
+    @extend %heading;
+    font-size: 2rem;
+    font-style: italic;
+    line-height: 2;
+}
+
+.heading-3 {
+    @extend %heading;
+    font-size: 1rem;
+    text-transform: uppercase;
+    color: $color-primary;
+}
+
+.heading-4 {
+    @extend %heading;
+    font-size: 1.2rem;
+}
+
+.btn {
+    background-color: $color-tertiary;
+    font-family: $font-display;
+    font-size: 1rem;
+    color: $color-white;
+    padding: .8rem 1rem;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all .2s;
+
+    &:hover {
+        background-color: rgba($color-tertiary, .5);
+    }
+
+    &--secondary {
+        background-color: $color-secondary;
+
+        &:hover {
+            background-color: rgba($color-secondary, .5);
+        }
+    }
+}

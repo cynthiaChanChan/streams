@@ -1,0 +1,22 @@
+.header {
+    color: $color-white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: $color-primary;
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    padding: 10px;
+    z-index: 1001;
+    box-shadow: 0 0 25px 5px #000;
+
+    &__content {
+        display: flex;
+        align-items: center;
+    }
+
+    &__item {
+        margin: 0 10px;
+    }
+}

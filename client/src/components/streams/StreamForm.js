@@ -1,23 +1,19 @@
 import React from 'react';
-import { Field, reduxForm } from  'redux-form';
-import { connect } from 'react-redux';
-
-import {createStream} from '../../actions';
+import { Field, reduxForm } from 'redux-form';
 
 class StreamCreate extends React.Component {
-
-    renderError = ({error, touched}) => {
-        if (error && touched) {
+    renderError({error, touched}) {
+        if(error && touched) {
             return (
-                <div className="ui error message">
+                <div className="ui message error">
                     <div className="header">{error}</div>
                 </div>
             );
         }
-    };
+    }
 
-    renderInput = ({ input, label, meta }) => {
-        const className = `field ${meta.touched && meta.error ? 'error' : ''}`;
+    renderInput = ({input, label, meta}) => {
+        const className = `field ${meta.error && meta.touched ? 'error' : ''}`;
         return (
             <div className={className}>
                 <label>{label}</label>
@@ -27,9 +23,9 @@ class StreamCreate extends React.Component {
         );
     };
 
-    onSubmit = (formValues) => {
-        this.props.createStream(formValues);
-    };
+    onSubmit = formValues => {
+        this.props.onSubmit(formValues);
+    }
 
     render() {
         return (
@@ -40,28 +36,20 @@ class StreamCreate extends React.Component {
             </form>
         );
     }
-};
+}
 
-const validate = (formValues) => {
-    const errors = {};
-
+const validate = formValues => {
+    const error = {};
     if (!formValues.title) {
-        errors.title = "Please enter a title";
-    }
+        error.title = "Please enter a title";
+    } 
     if (!formValues.description) {
-        errors.description = "Please enter a description";
+        error.description = "Please enter a description";
     }
-  
-    return errors;
-};
+    return error;
+} 
 
-const mapStateToProps = (state) => {
-    return { streams: state.streams };
-};
-
-const formWrapped = reduxForm({ 
-    form: 'streamCreate',
-    validate
+export default reduxForm({ 
+    form: 'streamForm',
+    validate 
 })(StreamCreate);
-
-export default connect(mapStateToProps, {createStream})(formWrapped);

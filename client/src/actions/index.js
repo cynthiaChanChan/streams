@@ -1,74 +1,47 @@
-import { AUTH_STATUS } from './types';
-import history from '../history';
-
-import {
-    CREATE_STREAM,
+import { 
+    AUTH_STATUS,
     FETCH_STREAMS,
     FETCH_STREAM,
-    UPDATE_STREAM,
-    DELETE_STREAM
+    CREATE_STREAM,
+    EDIT_STREAM,
+    DELECT_STREAM 
 } from './types';
 import stream from '../apis/stream';
+import history from '../history';
 
 const fetchAuth = (isSignedIn, userId) => {
     return {
         type: AUTH_STATUS,
-        payload: {
-            isSignedIn, userId
-        }
+        payload: { isSignedIn, userId }
     }
-};
-
-const createStream = formValues => async (dispatch, getState) => {
-    const userId = getState().auth.userId;
-    const response = await stream.post('/streams', {...formValues, userId});
-    
-    //link to root page after successfully create stream
-    history.push('/');
-
-    dispatch({
-        type: CREATE_STREAM,
-        payload: response.data
-    });
-};
+}
 
 const fetchStreams = () => async dispatch => {
     const response = await stream.get('/streams');
-    dispatch({
-        type: FETCH_STREAMS,
-        payload: response.data
-    });
-};
+    dispatch({ type: FETCH_STREAMS, payload: response.data });
+}
 
 const fetchStream = id => async dispatch => {
     const response = await stream.get(`/streams/${id}`);
-    dispatch({
-        type: FETCH_STREAM,
-        payload: response.data
-    });
-};
-
-const updateStream = id => async dispatch => {
-    const response = await stream.put(`/streams/${id}`);
-    dispatch({
-        type: UPDATE_STREAM,
-        payload: response.data
-    });
-};
-
-const deleteStream = id => async dispatch => {
-    await stream.delete(`/streams/${id}`);
-    dispatch({
-        type: DELETE_STREAM,
-        payload: id
-    });
+    dispatch({ type: FETCH_STREAM, payload: response.data });
 }
 
-export { 
-    fetchAuth, 
-    createStream, 
-    fetchStreams, 
-    fetchStream, 
-    updateStream, 
-    deleteStream 
-};
+const createStream = formValues => async (dispatch, getState) => {
+    const { userId } = getState().auth;
+    const response = await stream.post('/streams', {...formValues, userId});
+    dispatch({ type: CREATE_STREAM, payload: response.data });
+    history.push('/');
+}
+
+const editStream = (formValues, id) => async dispatch => {
+    const response = await stream.patch(`/streams/${id}`, formValues);
+    dispatch({ type: EDIT_STREAM, payload: response.data });
+    history.push('/');
+}
+
+const delectStream = id => async dispatch => {
+    await stream.delect(`/streams/${id}`);
+    dispatch({ type: DELECT_STREAM, payload: id });
+}
+
+export { fetchAuth, fetchStreams, fetchStream, createStream, editStream, delectStream };
