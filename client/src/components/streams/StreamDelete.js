@@ -12,6 +12,7 @@ class StreamDelect extends React.Component {
         this.props.fetchStream(this.props.match.params.id);
     }
 
+
     renderActions = () => {
         const { id } = this.props.match.params;
         return (

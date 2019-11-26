@@ -39,16 +39,17 @@ class StreamList extends React.Component {
             return (
                 <li className="stream__item" key={stream.id}>
                     <div className="stream__wrapper">
-                        <div 
+                        <Link
+                        to={`/streams/${stream.id}`}
                         className="stream__media"
                         style={{ backgroundImage: 'url(img/sofa.jpeg)' }}
                         >
-                        </div>
+                        </Link>
                         <div className="stream__content">
                             <div className="stream__meta">
-                                <div className="stream__title">
+                                <Link to={`/streams/${stream.id}`} className="stream__title">
                                     {stream.title}
-                                </div>
+                                </Link>
                                 {/* <div className="stream__info">{stream.description}</div> */}
                             </div>
                             {this.renderAdmin(stream)}
